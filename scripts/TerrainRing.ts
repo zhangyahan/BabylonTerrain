@@ -21,7 +21,7 @@
                         "startGridScale", "uRockHeight", "uGrassHeight", "uDirtHeight", "uMaterialMix", "detailScale", "detailSize",
                         "showGridLines", "rockAvg", "dirtAvg", "grassAvg"]
                 });
-            
+
 
             this.terrainShader.setFloat("gridSize", this.gridSize);
             this.terrainShader.setFloat("gridScale", this.gridScale);
@@ -46,14 +46,17 @@
             this.terrainShader.setVector3("rockAvg", new BABYLON.Vector3(0.451768651247, 0.451768651247, 0.451768651247));
         }
 
+        // @ts-ignore
         public get material(): Material {
             return this.terrainShader;
         }
 
+        // @ts-ignore
         public get isPickable(): boolean {
             return false;
         }
 
+        // @ts-ignore
         public get checkCollisions(): boolean {
             return false;
         }
@@ -103,8 +106,7 @@
             var offsetX = 0;
             var offsetZ = 0;
 
-            switch (side)
-            {
+            switch (side) {
                 case 1:
                     width /= 4;
                     offsetX += width * 1.5;
@@ -163,8 +165,7 @@
         public CreateRing(size: number) {
 
             var sides: Mesh[] = [];
-            for (var i = 1; i <= 4; i++)
-            {
+            for (var i = 1; i <= 4; i++) {
                 var strip = this.CreateStrip(size, i);
                 sides[i] = new BABYLON.Mesh("ringside_" + i, this.getScene());
                 strip.applyToMesh(sides[i]);

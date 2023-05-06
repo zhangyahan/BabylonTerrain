@@ -9,7 +9,7 @@
         indices: number[] = [];
         terrainShader: ShaderMaterial;
 
-        constructor(name: string, scene: Scene, gridSize: number, gridScale: number, parent: Node = null, source?: Mesh, doNotCloneChildren?: boolean){
+        constructor(name: string, scene: Scene, gridSize: number, gridScale: number, parent: Node = null, source?: Mesh, doNotCloneChildren?: boolean) {
             super(name, scene, parent, source, doNotCloneChildren);
             this.gridSize = gridSize;
             this.gridScale = gridScale;
@@ -52,14 +52,17 @@
 
         }
 
+        // @ts-ignore
         public get material(): Material {
             return this.terrainShader;
         }
 
+        // @ts-ignore
         public get isPickable(): boolean {
             return false;
         }
 
+        // @ts-ignore
         public get checkCollisions(): boolean {
             return false;
         }
@@ -95,10 +98,10 @@
             return new TerrainPatch(name, this.getScene(), this.gridSize, this.gridScale, newParent, this, doNotCloneChildren);
         }
 
-       
+
 
         public CreatePatch(size: number) {
-            var indices:number[] = [];
+            var indices: number[] = [];
             var positions: number[] = [];
             var normals: number[] = [];
             var uvs: number[] = [];

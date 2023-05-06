@@ -15,6 +15,8 @@ float getHeight(float s, float t) {
 	return height;
 }
 
+// 该片段着色器的工作是：
+// 根据不同贴图获取获取当前UV像素的颜色高度然后计算当前颜色值
 void main() {
 	float height = getHeight(0.0, 0.0);
 	float left = getHeight(-1.0, 0.0);
