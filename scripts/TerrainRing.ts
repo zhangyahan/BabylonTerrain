@@ -170,8 +170,11 @@
                 sides[i] = new BABYLON.Mesh("ringside_" + i, this.getScene());
                 strip.applyToMesh(sides[i]);
             }
+            // 将独立的条带合并为回字形状
             var mesh = BABYLON.Mesh.MergeMeshes(sides, true, true);
+            // 将形状应用到自身，这样就是调用自身的方法。
             mesh.geometry.applyToMesh(this);
+            // 销毁中间网格对象
             mesh.dispose();
         }
 

@@ -25,7 +25,11 @@ var BABYLON;
             Terrain.dirtColor = new BABYLON.Texture("./textures/dirt-color.png", scene);
             // 加载不同材质的高度贴图着色器
             this.LoadHeights(scene);
+            // 可能是需要避免贴图过大的问题，所以将地形分为中心区域以及环形区域去分别加载
+            // scale 越大，地形越不明显
+            // 创建地形中心对象
             this.patch = new BABYLON.TerrainPatch("terrainpatch", scene, this.gridSize, this.gridScale);
+            // 创建地形环对象，环对象的创建为上、下、左、右四个条带的创建
             for (var level = 0; level < this.gridLevels; level++) {
                 var scale = this.gridScale * Math.pow(2, level + 1);
                 var ring = new BABYLON.TerrainRing("terrainring_" + level, scene, this.gridSize, scale);
@@ -169,6 +173,10 @@ var BABYLON;
         TerrainPatch.prototype.clone = function (name, newParent, doNotCloneChildren) {
             return new TerrainPatch(name, this.getScene(), this.gridSize, this.gridScale, newParent, this, doNotCloneChildren);
         };
+        /**
+         * 创建中心区域
+         * @param size 区域尺寸
+         */
         TerrainPatch.prototype.CreatePatch = function (size) {
             var indices = [];
             var positions = [];
@@ -178,6 +186,8 @@ var BABYLON;
             var width = size;
             var height = size;
             var subdivisions = size;
+            // 根据尺寸生成尺寸数量的点位、法线、uv信息
+            // size * size 的行和列
             for (row = 0; row <= subdivisions; row++) {
                 for (col = 0; col <= subdivisions; col++) {
                     var position = new BABYLON.Vector3((col * width) / subdivisions - (width / 2.0), 0, ((subdivisions - row) * height) / subdivisions - (height / 2.0));
@@ -362,8 +372,11 @@ var BABYLON;
                 sides[i] = new BABYLON.Mesh("ringside_" + i, this.getScene());
                 strip.applyToMesh(sides[i]);
             }
+            // 将独立的条带合并为回字形状
             var mesh = BABYLON.Mesh.MergeMeshes(sides, true, true);
+            // 将形状应用到自身，这样就是调用自身的方法。
             mesh.geometry.applyToMesh(this);
+            // 销毁中间网格对象
             mesh.dispose();
         };
         return TerrainRing;
@@ -427,6 +440,11 @@ function createScene() {
         effect.setFloat("glowIntensity", 0.5);
         effect.setFloat("highlightIntensity", 0.8);
     };
+    var box = BABYLON.Mesh.CreateBox('box', 1, scene);
+    var boxMat = new BABYLON.StandardMaterial('boxMat', scene);
+    boxMat.diffuseColor = new BABYLON.Color3(1, 0, 0);
+    boxMat.emissiveColor = new BABYLON.Color3(1, 0, 0);
+    box.material = boxMat;
     return scene;
 }
 document.addEventListener("DOMContentLoaded", function () {

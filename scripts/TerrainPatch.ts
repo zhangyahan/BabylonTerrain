@@ -99,7 +99,10 @@
         }
 
 
-
+        /**
+         * 创建中心区域
+         * @param size 区域尺寸
+         */
         public CreatePatch(size: number) {
             var indices: number[] = [];
             var positions: number[] = [];
@@ -111,9 +114,16 @@
             var height: number = size;
             var subdivisions: number = size;
 
+            // 根据尺寸生成尺寸数量的点位、法线、uv信息
+            // size * size 的行和列
             for (row = 0; row <= subdivisions; row++) {
                 for (col = 0; col <= subdivisions; col++) {
-                    var position = new Vector3((col * width) / subdivisions - (width / 2.0), 0, ((subdivisions - row) * height) / subdivisions - (height / 2.0));
+                    var position = new Vector3(
+                        (col * width) / subdivisions - (width / 2.0), 
+                        0, 
+                        ((subdivisions - row) * height) / subdivisions - (height / 2.0)
+                    );
+                    
                     var normal = new Vector3(0, 1.0, 0);
                     positions.push(position.x, position.y, position.z);
                     normals.push(normal.x, normal.y, normal.z);

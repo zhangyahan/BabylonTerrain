@@ -70,6 +70,12 @@ function createScene() {
         effect.setFloat("highlightIntensity", 0.8);
     };
 
+    const box = BABYLON.Mesh.CreateBox('box', 1, scene)
+    const boxMat = new BABYLON.StandardMaterial('boxMat', scene)
+    boxMat.diffuseColor = new BABYLON.Color3(1, 0, 0)
+    boxMat.emissiveColor = new BABYLON.Color3(1, 0, 0)
+    box.material = boxMat
+
     return scene;
 }
 

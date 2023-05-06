@@ -49,8 +49,14 @@
             // 加载不同材质的高度贴图着色器
             this.LoadHeights(scene);
 
+            // 可能是需要避免贴图过大的问题，所以将地形分为中心区域以及环形区域去分别加载
+
+            // scale 越大，地形越不明显
+
+            // 创建地形中心对象
             this.patch = new BABYLON.TerrainPatch("terrainpatch", scene, this.gridSize, this.gridScale);
 
+            // 创建地形环对象，环对象的创建为上、下、左、右四个条带的创建
             for (var level = 0; level < this.gridLevels; level++) {
                 var scale = this.gridScale * Math.pow(2, level + 1);
                 var ring = new BABYLON.TerrainRing("terrainring_" + level, scene, this.gridSize, scale);
